@@ -1,0 +1,60 @@
+{% extends 'gourmate/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Popular Recipes
+{% endblock %}
+
+{% block body_block %}
+
+    <button class="btn btn-primary" type="popular" name="popular" style="background-color: #C13C14;">
+         <a href="{% url 'gourmate:recent_recipes' %}">most popular recipes</a> <br />
+    </button>
+    <button class="btn btn-primary" type="liked" name="liked" style="background-color: #C13C14;">
+         <a href="{% url 'gourmate:recent_recipes' %}">most liked recipes</a> <br />
+    </button>
+    <button class="btn btn-primary" type="recent" name="recent" style="background-color: #C13C14;">
+         <a href="{% url 'gourmate:recent_recipes' %}">most recent recipes</a> <br />
+    </button>
+    {% for recipe in recipes %}
+        <div class="container">
+            <ul  class="list-group list-group-flush">
+                <li  class="list-group-item">
+                    <h2 class="jumbotron-heading" style="color: #C13C14;">
+                    {{ recipe.title.errors }}
+                    {{ recipe.title }}
+                    </h2>
+
+                    <div class="col-sm-9">
+                    {% for category in categories %}
+                        <label class="checkbox-inline" style="color:darksalmon;">
+                        <input value="{{ category.id }}" type="checkbox" name="tags"/>{{ category.name }}
+                        </label>
+                    {% endfor %}
+                    </div>
+
+                    <div>
+                        <label style="color: lightsalmon;">
+                            <span data-feather="user" color="lightsalmon"></span>
+                            <a href="{% url 'gourmate:account' recipe.user.user.username %}"></a>
+                        </label>
+                    </div>
+
+                    {% if request.user.is_authenticated %}
+                    <div class="form-group ">
+                        <a class="btn btn-primary" title="Like recipe" href="{% url 'rate' type='recipe' id=recipe.id %}?value=1">
+                            <span data-feather="heart" color="pink"></span> :{{recipe.likes}}
+                        </a>
+                    </div>
+                    {% else %}
+                        <p><span data-feather="heart" color="pink"></span> :{{recipe.likes}}</p>
+                        <p>To like this recipe please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a></p>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <strong>No recipes currently in category.</strong>
+    {% endif %}
+{% endblock %}
