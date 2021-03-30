@@ -1,9 +1,9 @@
 from django.contrib import admin
-from gourmate_app.models import Category, Recipe
+from gourmate_app.models import Recipe, UserProfile, Comment
 
 # Register your models here.
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ('category', 'title', 'views', 'likes', 'tags')
+    list_display = ('title', 'views', 'likes', 'tags')
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('tags')
@@ -12,8 +12,5 @@ class RecipeAdmin(admin.ModelAdmin):
         return u", ".join(o.name for o in obj.tags.all())
 
 admin.site.register(Recipe, RecipeAdmin)
-
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
-
-admin.site.register(Category, CategoryAdmin)
+admin.site.register(UserProfile)
+admin.site.register(Comment)

@@ -1,5 +1,6 @@
 from django import forms
-from rango.models import Recipe
+from django.contrib.auth.models import User
+from gourmate_app.models import Recipe, Comment, UserProfile
 
 class RecipeForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the title of the recipe.")
@@ -11,3 +12,22 @@ class RecipeForm(forms.ModelForm):
     class Meta:
         model = Recipe
         fields = ('title', 'img', 'text', 'tags',)
+
+class CommentForm(forms.ModelForm):
+    text = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Comment
+        fields = ('text',)
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('picture', 'bio',)
