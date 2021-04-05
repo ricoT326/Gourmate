@@ -29,15 +29,20 @@ def add_recipe(request):
             recipe.save()
     return render(request, 'gourmate/add_recipe.html')
 
-@login_required
+
 def popular_recipes(request):
-    context_dict = {'popular_recipes': Recipe.order_by('likes')[:10]}
+    context_dict = {'popular_recipes': Recipe.order_by('-views')[:10]}
     return render(request, 'gourmate/popular_recipes.html', context = context_dict)
 
-@login_required
+
 def recent_recipes(request):
     context_dict = {'recent_recipes': Recipe.order_by('-date')[:10]}
     return render(request, 'gourmate/recent_recipes.html', context_dict)
+
+
+def liked_recipes(request):
+    context_dict = {'liked_recipes': Recipe.order_by('-likes')[:10]}
+    return render(request, 'gourmate/liked_recipes.html', context_dict)
 
 @login_required
 def profile(request, username):
@@ -96,8 +101,7 @@ def like_recipe(request):
 def categories(request):
     context_dict = {}
     try:
-        category = Category.objects.get
-        context_dict['category'] = category.objects.all()
+        context_dict['category'] = Category.objects.all()
     except Category.DoesNotExist:
         context_dict['category'] = None
 

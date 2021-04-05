@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-<<<<<<< HEAD
-=======
-{% load gouramate_template_tags %}
+{% load gourmate_template_tags %}
 
->>>>>>> 3559224064b553f0a17f2adc7f0751ea17fbdb17
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -26,29 +23,18 @@
 
     <body>
         <header>
-<<<<<<< HEAD
-            <nav class="navbar navbar-expand-md navbar-#E64A45 fixed-top bg-dark p-0">
-                <a class="navbar-brand p-2" href="{% url 'gourmate:index' %}">Gourmate</a>
-=======
             <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark p-0" style="background-color: #C13C14;">
-                <a class="navbar-brand p-2" href="{% url 'gourmate:homepage' %}">Gourmate</a>
->>>>>>> 3559224064b553f0a17f2adc7f0751ea17fbdb17
+                <a class="navbar-brand p-2" href="{% url 'gourmate:index' %}">Gourmate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
-<<<<<<< HEAD
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:index' %}">Home</a></li>
-                        {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
-=======
-                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:homepage' %}">Home</a></li>
                         {% if request.user.is_authenticated %}
->>>>>>> 3559224064b553f0a17f2adc7f0751ea17fbdb17
-                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:add_recipe' %}">Add Recipe</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:account' %}">My account</a></li>
+                        <!--<li class="nav-item"><a class="nav-link" href=" url 'gourmate:add_recipe' %}">Add Recipe</a></li>-->
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:profile' user.username %}">My account</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
                         {% else %}

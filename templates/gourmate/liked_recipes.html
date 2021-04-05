@@ -20,13 +20,13 @@
             <ul  class="list-group list-group-flush">
                 <li  class="list-group-item">
                     <h2 class="jumbotron-heading" style="color: #C13C14;">
-                    <a href="{% url 'rango:show_recipe' recipe.slug %}">
+                    <a href="{% url 'rango:recipe' recipe.slug %}">
                         {{ recipe.title.errors }}
                         {{ recipe.title }}
                         <img src="{{ MEDIA_URL }}{{ recipe.picture }}" class="figure-img img-fluid" alt="PlaceHolder">
                     </a>
                     </h2>
-
+<!--
                     <div class="form-group">
                         <div class="col-sm-9" style="color:darksalmon;">
                         {% for category in categories %}
@@ -34,7 +34,7 @@
                                 {{ category.name }}
                         {% endfor %}
                         </div>
-                    </div>
+                    </div> -->
 
                     <div>
                         <label style="color: lightsalmon;">
@@ -52,7 +52,7 @@
                     </div>
                     {% else %}
                         <p><span data-feather="heart" color="pink"></span> :{{recipe.likes}}</p>
-                        <p>To like this recipe please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a></p>
+                        <p>To like this recipe please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'registration_register' %}">register</a></p>
                     {% endif %}
                 </li>
             </ul>
