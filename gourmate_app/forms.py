@@ -11,7 +11,7 @@ class RecipeForm(forms.ModelForm):
 
     class Meta:
         model = Recipe
-        fields = ('title', 'img', 'text', 'tags',)
+        fields = ('title', 'img', 'text',)
 
 class CommentForm(forms.ModelForm):
     text = forms.CharField(widget=forms.Textarea)
