@@ -32,10 +32,11 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:index' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'gourmate:categories' %}">Categories</a></li>
                         {% if request.user.is_authenticated %}
                         <!--<li class="nav-item"><a class="nav-link" href=" url 'gourmate:add_recipe' %}">Add Recipe</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:profile' user.username %}">My account</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/gourmate/">Logout</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>

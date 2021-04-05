@@ -9,6 +9,7 @@ from datetime import datetime
 from gourmate_app.models import Recipe, UserProfile, Comment, Category
 from django.urls import reverse
 from django.contrib.auth.models import User
+from datetime import datetime
 
 def index(request):
     context_dict = {}
@@ -20,14 +21,31 @@ def restricted(request):
     return render(request, 'gourmate/restricted.html')
 
 @login_required
-def add_recipe(request):
+def add_recipe(request, category_name_slug):
+    try:
+        category = Category.objects.get(slug=category_name_slug)
+    except Category.DoesNotExist:
+        category = None
+
+    if category is None:
+        return redirect(reverse('gourmate:index'))
+
+    form = RecipeForm()
     if request.method == 'POST':
-        add_recipe = RecipeForm(request.POST)
-        if add_recipe.is_valid():
-            recipe = add_recipe.save(commit = False)
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            recipe = form.save(commit = False)
             recipe.user = UserProfile.objects.get(user = request.user)
+            recipe.category = category
+            recipe.views = 0
+            recipe.likes = 0
+            recipe.date = datetime.now()
             recipe.save()
-    return render(request, 'gourmate/add_recipe.html')
+            return redirect(reverse('gourmate:show_category', kwargs={'category_name_slug': category_name_slug}))
+        else:
+            print(form.errors)
+    context_dict = {'form': form, 'category': category}
+    return render(request, 'gourmate/add_recipe.html', context_dict)
 
 
 def popular_recipes(request):
@@ -44,7 +62,6 @@ def liked_recipes(request):
     context_dict = {'liked_recipes': Recipe.order_by('-likes')[:10]}
     return render(request, 'gourmate/liked_recipes.html', context_dict)
 
-@login_required
 def profile(request, username):
     try:
         user = User.objects.get(username=username)
@@ -76,7 +93,7 @@ def register_profile(request):
             user_profile = form.save(commit=False)
             user_profile.user = request.user
             user_profile.save()
-            return render(reverse('gourmate:index'))
+            return redirect(reverse('gourmate:index'))
         else:
             print(form.errors)
 
@@ -97,17 +114,16 @@ def like_recipe(request):
     recipe.save()
     return HttpResponse(recipe.likes)
 
-@login_required
+
 def categories(request):
     context_dict = {}
     try:
-        context_dict['category'] = Category.objects.all()
+        context_dict['categories'] = Category.objects.all()
     except Category.DoesNotExist:
-        context_dict['category'] = None
+        context_dict['categories'] = None
 
     return render(request, 'gourmate/categories.html', context=context_dict)
 
-@login_required
 def recipe(request, recipe_title):
     context_dict = {}
     try:
@@ -127,7 +143,8 @@ def recipe(request, recipe_title):
         if form.is_valid():
             if recipe:
                 comment = form.save(commit=False)
-                comment.user = request.user
+                user = UserProfile.objects.get_or_create(user=request.user)[0]
+                comment.user = user
                 comment.recipe = recipe
                 comment.date = datetime.now()
                 comment.likes = 0
@@ -138,7 +155,7 @@ def recipe(request, recipe_title):
     context_dict['form'] = form
     return render(request, "gourmate/recipe.html", context_dict)
 
-@login_required
+
 def show_category(request, category_name_slug):
     context_dict = {}
     try:
