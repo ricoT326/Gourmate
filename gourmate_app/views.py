@@ -18,21 +18,35 @@ def index(request):
 def restricted(request):
     return render(request, 'gourmate/restricted.html')
 
-
-def recipe(request):
+@login_required
+def recipe(request, num):
     context_dict = {}
-    context_dict['Recipe'] = Recipe.objects.all()
-    recipe = Recipe.objects.all()
-    views = Recipe.views
+    context_dict['recipes'] = Recipe.objects.all()
+    recipe = Recipe.objects.get(num = num)
+    context_dict['recipe'] = recipe
+    context_dict['comments'] = Comment.objects.all().filter(recipe = context_dict['recipe'])
+    recipe.views += 1
+    recipe.save()
     return render(request, 'gourmate/recipe.html')
 
 @login_required
 def add_recipe(request):
     if request.method == 'POST':
         add_recipe = RecipeForm(request.POST)
+        if add_recipe.is_valid():
+            recipe = add_recipe.save(commit = False)
+            user = UserProfile.objects.get(user = request.user)
+
     return render(request, 'gourmate/add_recipe.html')
 
 
+def popular_recipes(request):
+    context_dict={}
+    context_dict=['recipe'] = Recipe.objects.all()
+    context_dict['popular recipes'] = {'Popular Recipes': Recipe.order_by('likes')}
+    return render(request, 'gourmate/popular_recipes.html', context = context_dict)
 
 
-'['
+
+
+
