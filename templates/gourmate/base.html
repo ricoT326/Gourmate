@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load gouramate_template_tags %}
-
-<!DOCTYPE html>
-{% load staticfiles %}
-{% load gouramate_template_tags %}
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -27,14 +22,14 @@
     <body>
         <header>
             <nav class="navbar navbar-expand-md navbar-#E64A45 fixed-top bg-dark p-0">
-                <a class="navbar-brand p-2" href="{% url 'gourmate:homepage' %}">Gourmate</a>
+                <a class="navbar-brand p-2" href="{% url 'gourmate:index' %}">Gourmate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:homepage' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:index' %}">Home</a></li>
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:add_recipe' %}">Add Recipe</a></li>

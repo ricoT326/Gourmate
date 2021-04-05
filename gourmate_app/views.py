@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.defaultfilters import title
@@ -21,21 +20,6 @@ def restricted(request):
     return render(request, 'gourmate/restricted.html')
 
 @login_required
-def recipe(request, title):
-    context_dict = {}
-    try:
-        recipe = Recipe.objects.get(title=title)
-        recipe.views += 1
-        recipe.save()
-        context_dict['recipe'] = recipe
-        context_dict['comments'] = Comment.objects.filter(recipe=recipe)
-    except Recipe.DoesNotExist:
-        context_dict['recipe'] = None
-        context_dict['comments'] = None
-    return render(request, 'gourmate/recipe.html', context_dict)
-
-
-@login_required
 def add_recipe(request):
     if request.method == 'POST':
         add_recipe = RecipeForm(request.POST)
@@ -47,10 +31,13 @@ def add_recipe(request):
 
 @login_required
 def popular_recipes(request):
-    context_dict={}
-    context_dict['popular recipes'] = {'Popular Recipes': Recipe.order_by('likes')[:10]}
+    context_dict = {'popular_recipes': Recipe.order_by('likes')[:10]}
     return render(request, 'gourmate/popular_recipes.html', context = context_dict)
 
+@login_required
+def recent_recipes(request):
+    context_dict = {'recent_recipes': Recipe.order_by('-date')[:10]}
+    return render(request, 'gourmate/recent_recipes.html', context_dict)
 
 @login_required
 def profile(request, username):
