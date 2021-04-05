@@ -4,14 +4,14 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from gourmate.forms import UserForm, UserProfileForm, CommentForm, RecipeForm
+from gourmate_app.forms import UserForm, UserProfileForm, CommentForm, RecipeForm
 from datetime import datetime
-from gourmate.models import Recipe, UserProfile, Comment
+from gourmate_app.models import Recipe, UserProfile, Comment
 
 
 def index(request):
     context_dict = {}
-    context_dict['visits'] = request.session['visits']
+    context_dict['recipes'] = Recipe.objects.all()
     return render(request, 'gourmate/popular_recipes.html', context=context_dict)
 
 
@@ -42,7 +42,7 @@ def add_recipe(request):
 
 def popular_recipes(request):
     context_dict={}
-    context_dict=['recipe'] = Recipe.objects.all()
+    #context_dict=['recipe'] = Recipe.objects.all()
     context_dict['popular recipes'] = {'Popular Recipes': Recipe.order_by('likes')}
     return render(request, 'gourmate/popular_recipes.html', context = context_dict)
 
