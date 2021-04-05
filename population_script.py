@@ -24,7 +24,7 @@ def add_user(username, password, image, bio):
 
 def add_recipe(category, user, title, views, likes, image, date, text):
     recipe = Recipe.objects.get_or_create(category = category, user = user, title = title, views = views, likes = likes,
-                                        img = image, date = date, text = text)[0]
+                                          img = image, date = date, text = text)[0]
     recipe.save()
     return recipe
 
@@ -78,7 +78,7 @@ def populate():
          'views': 44,
          'likes': 3,
          'date': '2021-01-14',
-         'img': 'pop_imgs/bur.jfif',
+         'img': 'recipe_images/bur.jfif',
          'text': """STEP 1. Heat the oil in a large pan – a casserole is ideal. Fry the onions for 8 mins, then add the garlic, 
          spices and oregano and cook for 1 min. Crumble over the mince and sizzle for 5 mins, stirring, until browned. 
          Stir in the sugar and leave for a minute, then splash in the vinegar and pour in the tomatoes."""},
@@ -111,7 +111,8 @@ def populate():
          expiration date on the yeast package! Yeast that is too old may be dead and won't work. You can use all 
          purpose flour instead of the bread flour that is called for in the recipe, but bread flour is higher in gluten
           than all-purpose flour and will make a crispier crust for your pizza."""},
-        {'category': 'French'
+        {'category': 'French',
+         'user': 'Lisa',
          'title': 'Healthy Salad',
          'views': 610,
          'likes': 1,
