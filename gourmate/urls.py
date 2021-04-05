@@ -23,4 +23,5 @@ urlpatterns = [
     path('gourmate/', include('gourmate_app.urls')),
     path('admin/', admin.site.urls),
     
+    
 ]

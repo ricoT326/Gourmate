@@ -5,14 +5,13 @@ app_name = 'gourmate'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    #path('register/', views.register, name='register'),
-    #path('login/', views.user_login, name='login'),
-    #path('logout/', views.user_logout, name='logout'),
-    #path('home/', views.home, name = 'home'),
-    #path('logout/', views.user_logout, name='logout'),
-    #path('contact-us/', views.contact_us, name='contact us'),
-    #path('chosen-recipe', views.chosen_recipe, name='chosen recipe'),
-    #path('categories/', views.categories, name = 'categories'),
-    
+    path('profile/<username>/', views.profile, name='profile'),
+    path('register_profile/', views.register_profile, name='register_profile'),
+    path('like_recipe/', views.like_recipe, name='like_recipe'),
+    path('contact_us/', views.contact_us, name='contact_us'),
+    #path('categories/', views.categories, name='categories'),
+    path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
+    path('category/<slug:category_name_slug>/<recipe_title>/', views.recipe, name='recipe'),
 ]
+
 
