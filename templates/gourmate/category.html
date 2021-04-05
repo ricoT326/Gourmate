@@ -10,6 +10,10 @@
 {% endblock %}
 
 {% block body_block %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'gourmate:add_recipe' category.slug %}">Add Page</a> <br />
+    {% endif %}
+
     {% if category %}
         <h1>{{ category.name }}</h1>
     {% if recipes %}
@@ -19,8 +23,11 @@
             <ul  class="list-group list-group-flush">
                 <li  class="list-group-item">
                     <h2 class="jumbotron-heading" style="color: #C13C14;">
-                    {{ recipe.title.errors }}
-                    {{ recipe.title }}
+                        <a href="{% url 'gourmate:show_recipe' recipe.slug %}">
+                            {{ recipe.title.errors }}
+                            {{ recipe.title }}
+                            <img src="{{ MEDIA_URL }}{{ recipe.picture }}" class="figure-img img-fluid" alt="PlaceHolder">
+                        </a>
                     </h2>
 
                     <div class="col-sm-9">
@@ -31,11 +38,13 @@
                     {% endfor %}
                     </div>
 
-                    <div>
-                        <label style="color: lightsalmon;">
-                            <span data-feather="user" color="lightsalmon"></span>
-                            <a href="{% url 'gourmate:account' comment.user.user.username %}"></a>
-                        </label>
+                    <div class="form-group">
+                        <div class="col-sm-9" style="color:darksalmon;">
+                        {% for category in categories %}
+                            <a href="{% url 'gourmate:show_category' category.slug %}"></a>
+                                {{ category.name }}
+                        {% endfor %}
+                        </div>
                     </div>
 
                     {% if request.user.is_authenticated %}

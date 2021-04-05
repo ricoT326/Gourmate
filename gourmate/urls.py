@@ -30,6 +30,14 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('gourmate/', include('gourmate_app.urls')),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
     path('accounts/', include('registration.backends.simple.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+    path('category/<slug:category_name_slug>/',
+         views.show_category, name='show_category'),
+    
+    
+]
+>>>>>>> 3559224064b553f0a17f2adc7f0751ea17fbdb17

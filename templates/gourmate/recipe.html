@@ -1,32 +1,104 @@
 {% extends 'gourmate/base.html' %}
 {% load staticfiles %}
-{% block title %}Add Page{% endblock %}
+{% block title %}
+    Recipe
+{% endblock %}
+
 {% block body_block %}
     <div class="jumbotron p-4">
         <div class="container">
-        <h1 class="jumbotron-heading">Add a Recipe to {{category.name}}</h1>
+			<h1 class="jumbotron-heading" style="color: #C13C14;">
+				{{ recipe.title.errors }}
+				{{ recipe.title }}
+			</h1>
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <form role="form" id="page_form" method="post"
-                action="{% url 'rango:add_page' category.slug %}">
-            {% csrf_token %}
-            {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}<br />
-                {{ field }}<br />
-                <div class="p-2"></div>
-            {% endfor %}
-                <br />
-                <button class="btn btn-primary" type="submit" name="submit">
-                    Add Page
-                </button>
-                <div class="p-5"></div>
-            </form>
-        </div>
-    </div>
+
+	<div class="form-group">
+		<div class="col-sm-9" style="color:darksalmon;">
+		{% for category in categories %}
+			<a href="{% url 'rango:show_category' category.slug %}"></a>
+				{{ category.name }}
+		{% endfor %}
+		</div>
+	</div>
+
+	<div>
+		<label style="color: lightsalmon;">
+			<span data-feather="user" color="lightsalmon"></span>
+			<a href="{% url 'gourmate:account' recipe.user.user.username %}"></a>
+		</label>
+	</div>
+
+	<div class="form-group">
+		<div class="container">
+			<img src="{{ MEDIA_URL }}{{ recipe.picture }}" class="figure-img img-fluid" alt="PlaceHolder">
+			{{ recipe.content.errors }}
+			{{ recipe.content }}
+		</div>
+	</div>
+
+	{% if request.user.is_authenticated %}
+	<div class="form-group ">
+		<a class="btn btn-primary" title="Like recipe" href="{% url 'rate' type='recipe' id=recipe.id %}?value=1">
+			<span data-feather="heart" color="pink"></span> :{{recipe.likes}}
+		</a>
+	</div>
+	{% else %}
+		<p><span data-feather="heart" color="pink"></span> :{{recipe.likes}}</p>
+		<p>To like this recipe please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a></p>
+	{% endif %}
+
+    <div class = "form wide-form fade-in">
+		<h3>Comments</h3>
+		{% if request.user.is_authenticated %}
+			<form id='comment_form' method='post' action="{% url 'comment' meme.id %}">
+				{% csrf_token %}
+				{% if comment_form.errors %}
+			    {% for field in user_form %}
+			        {% for error in field.errors %}
+								<div class="alert alert-danger">
+									<a class="close" href="#" data-dismiss="alert">×</a>
+						      {{ error|escape }}
+								</div>
+			        {% endfor %}
+			    {% endfor %}
+				{% endif %}
+				<div class="form-group row">
+					<div class="col">
+						{{ comment_form.text }}
+					</div>
+					<div class="col">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</div>
+			</form>
+		{% else %}
+			<p>To write or like a comment please <a href="{% url 'login' %}">log in</a> or <a href="{% url 'register' %}">register</a></p>
+		{% endif %}
+		<hr>
+		<ul class="list-unstyled">
+			{% for comment in comments %}
+				<li class="media">
+					<a href="{% url 'gourmate:account' comment.user.user.username %}"></a>
+					<div class="media-body">
+						<div class="comment-inline">
+							<h5 class="mt-10"><a href="{%url 'gourmate:account' comment.user.user.username %}">{{comment.user.user.username}}</a></h5>
+							<p id="regPageText">{{comment.date}}</p>
+						</div>
+						<p>{{comment.text}}</p>
+						{% if request.user.is_authenticated %}
+						<div class="form-group ">
+							<a class="btn btn-primary" title="Like comment" href="{% url 'rate' type='comment' id=comment.id %}?value=1">
+                                <span data-feather="heart" color="pink"></span> :{{comment.likes}}
+                            </a>
+						</div>
+						{% else %}
+							<p><span data-feather="heart" color="pink"></span> :{{recipe.likes}}</p>
+						{% endif %}
+					</div>
+				</li>
+			<hr>
+			{% endfor %}
+		</ul>
 {% endblock %}

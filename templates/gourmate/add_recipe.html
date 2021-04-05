@@ -19,25 +19,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Tags</label>
-                    <div class="col-sm-9">
-                        {% for category in categories %}
-                        {% if category.id in check_id %}
-                            <label class="checkbox-inline">
-                                <input value="{{ category.id }}" type="checkbox" name="categories" checked="checked"/>{{ category.name }}
-                            </label>
-                        {% else %}
-                            <label class="checkbox-inline">
-                                <input value="{{ category.id }}" type="checkbox" name="tags"/>{{ category.name }}
-                            </label>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                <div class="form-group">
+                    <label for="uploadImage">Please upload an image:</label>
+                        <input type="file" accept="image/*" class="form-control-file" id="uploadImage"><br>
                     <label for="id_content">Content</label>
-                    <input id="id_content" type="text" name="content">
+                    <textarea id="id_content" name="content" rows="100"></textarea>
                 </div>
-            </div>
+
                 <button class="btn btn-primary" type="submit" name="submit" style="background-color: #C13C14;">
                     Add Recipe
                 </button>

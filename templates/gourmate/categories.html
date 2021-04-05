@@ -10,7 +10,7 @@
                     <ul  class="list-group list-group-flush">
                         {% for category in categories %}
                             <li  class="list-group-item">
-                            <a href="{% url 'rango:show_category' category.slug %}">
+                            <a href="{% url 'gourmate:show_category' category.slug %}">
                                 <span data-feather="chevron-right"></span>{{ category.name }}
                             </a>
                             </li>
