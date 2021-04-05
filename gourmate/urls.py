@@ -22,6 +22,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('gourmate/', include('gourmate_app.urls')),
     path('admin/', admin.site.urls),
+    path('category/<slug:category_name_slug>/',
+         views.show_category, name='show_category'),
     
     
 ]

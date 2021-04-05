@@ -106,10 +106,21 @@ def like_recipe(request):
     return HttpResponse(recipe.likes)
 
 @login_required
+def categories(request):
+    context_dict = {}
+    try:
+        category = Category.objects.get
+        context_dict['category'] = category.objects.all()
+    except Category.DoesNotExist:
+        context_dict['category'] = None
+
+    return render(request, 'gourmate/categories.html', context=context_dict)
+
+@login_required
 def recipe(request, recipe_title):
     context_dict = {}
     try:
-        recipe = Recipe.objects.get(recipe_title = title)
+        recipe = Recipe.objects.get(title=recipe_title)
         recipe.views += 1
         recipe.save()
         context_dict['recipe'] = recipe

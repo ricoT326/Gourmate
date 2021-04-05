@@ -134,6 +134,6 @@ REGISTRATION_OPEN = True
 
 REGISTRATION_AUTO_LOGIN = True
 
-LOGIN_REDIRECT_URL = 'rango:index'
+LOGIN_REDIRECT_URL = 'gourmate:index'
 
 LOGIN_URL = 'auth_login'

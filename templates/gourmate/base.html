@@ -2,9 +2,6 @@
 {% load staticfiles %}
 {% load gouramate_template_tags %}
 
-<!DOCTYPE html>
-{% load staticfiles %}
-{% load gouramate_template_tags %}
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -14,7 +11,7 @@
     <meta name="generator" content="Jekyll v3.8.5">
     <link rel="icon" href="{% static 'images/favicon.ico' %}">
     <title>
-        Gourmate  {% block title_block %}Gourmate{% endblock %}
+        Gourmate  {% block title_block %}Here's your Gourmate!{% endblock %}
     </title>
 
     <!-- Bootstrap core CSS -->
@@ -26,7 +23,7 @@
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-md navbar-#E64A45 fixed-top bg-dark p-0">
+            <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark p-0" style="background-color: #C13C14;">
                 <a class="navbar-brand p-2" href="{% url 'gourmate:homepage' %}">Gourmate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -35,9 +32,10 @@
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:homepage' %}">Home</a></li>
-                        {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
+                        {% if request.user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:add_recipe' %}">Add Recipe</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:account' %}">My account</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/rango/">Logout</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'registration_register' %}">Register Here</a></li>

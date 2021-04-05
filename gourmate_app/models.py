@@ -1,5 +1,4 @@
 from django.db import models
-from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.template.defaultfilters import slugify
@@ -37,6 +36,10 @@ class Recipe(models.Model):
     date = models.DateField(default=datetime.now)
     text = models.TextField()
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Recipe, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
@@ -48,5 +51,5 @@ class Comment(models.Model):
     likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.user.username}: {self.text}"
+        return f"{self.user}: {self.text}"
 
