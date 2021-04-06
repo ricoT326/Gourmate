@@ -1,0 +1,17 @@
+{% extends 'gourmate/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Restricted Page
+{% endblock %}
+
+{% block body_block %}
+    <h1>Your gourmate says...</h1>
+    <div>
+        {% if user.is_authenticated %}
+            hello <a href="{%url 'gourmate:profile' request.user.username %}">{{request.user.username}}</a>!
+        {% else %}
+            hey there partner! If not logged in you can't view profile...
+        {% endif %}
+    </div>
+{% endblock %}
