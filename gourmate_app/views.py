@@ -13,12 +13,8 @@ from datetime import datetime
 
 def index(request):
     context_dict = {}
-    context_dict['recipes'] = Recipe.objects.all()
+    context_dict['recipes'] = Recipe.objects.order_by('-likes')
     return render(request, 'gourmate/index.html', context=context_dict)
-
-
-def restricted(request):
-    return render(request, 'gourmate/restricted.html')
 
 @login_required
 def add_recipe(request, category_name_slug):
@@ -46,22 +42,6 @@ def add_recipe(request, category_name_slug):
             print(form.errors)
     context_dict = {'form': form, 'category': category}
     return render(request, 'gourmate/add_recipe.html', context_dict)
-
-
-def popular_recipes(request):
-    context_dict = {}
-    context_dict['recipes'] = Recipe.objects.all()
-    return render(request, 'gourmate/popular_recipes.html', context_dict)
-
-
-def recent_recipes(request):
-    context_dict = {'recipes': Recipe.objects.order_by('-date')[:10]}
-    return render(request, 'gourmate/recent_recipes.html', context_dict)
-
-
-def liked_recipes(request):
-    context_dict = {'recipes': Recipe.objects.order_by('-likes')[:10]}
-    return render(request, 'gourmate/liked_recipes.html', context_dict)
 
 def profile(request, username):
     try:
@@ -182,12 +162,3 @@ def show_category(request, category_name_slug):
         context_dict['category'] = None
 
     return render(request, 'gourmate/category.html', context=context_dict)
-
-def contact_us(request):
-    return render(request, 'gourmate/contact_us.html')
-
-
-
-
-
-

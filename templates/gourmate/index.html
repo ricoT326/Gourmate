@@ -5,20 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
-    <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-primary" type="popular" name="popular">
-            <a href="#" class="link-danger" href="{% url 'gourmate:popular_recipes' %}">most popular recipes</a> <br />
-        </button>
-        <button type="button" class="btn btn-outline-primary" type="liked" name="liked">
-            <a href="#" class="link-danger" href="{% url 'gourmate:liked_recipes' %}">most liked recipes</a> <br />
-        </button>
-        <button type="button" class="btn btn-outline-primary" type="recent" name="recent">
-            <a href="#" class="link-danger" href="{% url 'gourmate:recent_recipes' %}">most recent recipes</a> <br />
-        </button>
-    </div>
-    <br>
     {% for recipe in recipes %}
-    <br>
     <div class="card" style="width: 18rem;">
         <img src="{{ MEDIA_URL }}{{ recipe.img }}" class="card-img-top" alt="...">
         <div class="card-body">
@@ -31,7 +18,7 @@
             <div>
                 <label style="color: lightsalmon;">
                     <span data-feather="user" color="lightsalmon"></span>
-                    <a href="{% url 'gourmate:profile' recipe.user.user.username %}">{{recipe.user.user.username}}</a>
+                    <a href="{% url 'gourmate:profile' recipe.user.user %}">{{recipe.user.user.username}}</a>
                 </label>
             </div>
         </div>

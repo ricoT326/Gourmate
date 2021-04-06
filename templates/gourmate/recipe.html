@@ -49,29 +49,8 @@
 			<form id='comment_form' method='post' action="{% url 'gourmate:recipe' recipe.title %}">
 				{% csrf_token %}
 				{{ form.as_p }}
-				<!--
-				{% if comment_form.errors %}
-					{% for field in user_form %}
-						{% for error in field.errors %}
-									<div class="alert alert-danger">
-										<a class="close" href="#" data-dismiss="alert">×</a>
-								  {{ error|escape }}
-									</div>
-						{% endfor %}
-					{% endfor %}
-				{% endif %}
-				<div class="form-group row">
-				
-					<div class="col">
-						{{ comment_form.text }}
-					</div>
-					<div class="col">
-					
-					<div class="form-group">
-						<input class="form-control" type="text" size="50"/>
-					</div>-->
-						<button type="submit" class="btn btn-primary">Submit</button>
-					<!--</div>-->
+				</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
 			</form>
 		{% else %}
@@ -90,11 +69,11 @@
 						<p>{{comment.text}}</p>
 						
 						<div>
-							<strong id="like_count_comment">{{ comment.likes }}</strong> likes
+							<strong id="{{comment.id}}" class="like_count_comment">{{ comment.likes }}</strong> likes
 							{% if user.is_authenticated %}
-							<button id="like_btn_comment"
-								data-commentid="{{comment.id}}"
-								class="btn btn-primary btn-sm"
+							<button data-commentid="{{comment.id}}"
+							    id="btn_{{comment.id}}"
+								class="like_btn_comment btn btn-primary btn-sm"
 								type="button">
 								<span data-feather="heart" color="pink"></span>
 								Like Comment

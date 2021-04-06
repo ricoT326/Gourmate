@@ -38,9 +38,9 @@
                     </div>
 
 					<div>
-						<strong id="like_count">{{ recipe.likes }}</strong> likes
+						<strong id="like_count_recipe">{{ recipe.likes }}</strong> likes
 						{% if user.is_authenticated %}
-						<button id="like_btn"
+						<button id="like_btn_recipe"
 							data-recipeid="{{recipe.id}}"
 							class="btn btn-primary btn-sm"
 							type="button">

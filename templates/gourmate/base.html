@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-{% load gourmate_template_tags %}
 
 <html lang="en">
     <head>
@@ -38,7 +37,6 @@
                     </ul>
                     <ul class="navbar-nav justify-content-end">
                         {% if request.user.is_authenticated %}
-                        <!--<li class="nav-item"><a class="nav-link" href=" url 'gourmate:add_recipe' %}">Add Recipe</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:profile' user.username %}">My account</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_logout' %}?next=/gourmate/">Logout</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'auth_password_change' %}">Change Password</a></li>
@@ -57,7 +55,6 @@
                     <!-- FOOTER -->
                     <footer>
                         <p class="float-right"><a href="#">Back to top</a></p>
-                        <p>&copy; 2021 Gourmate &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
                     </footer>
                 </main>
             </div>
