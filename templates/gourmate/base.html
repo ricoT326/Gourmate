@@ -19,11 +19,13 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.2/examples/dashboard/dashboard.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="colors.css">
     </head>
 
     <body>
         <header>
-            <nav class="navbar navbar-expand-md navbar-light fixed-top bg-dark p-0" style="background-color: #C13C14;">
+            <nav class="navbar navbar-expand-md navbar-light fixed-top p-0" style="background-color: #C13C14;">
                 <a class="navbar-brand p-2" href="{% url 'gourmate:index' %}">Gourmate</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,6 +35,8 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:index' %}">Home</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'gourmate:categories' %}">Categories</a></li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end">
                         {% if request.user.is_authenticated %}
                         <!--<li class="nav-item"><a class="nav-link" href=" url 'gourmate:add_recipe' %}">Add Recipe</a></li>-->
                         <li class="nav-item"><a class="nav-link" href="{% url 'gourmate:profile' user.username %}">My account</a></li>
