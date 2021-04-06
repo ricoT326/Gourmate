@@ -7,61 +7,49 @@
 {% block body_block %}
 
     <button class="btn btn-primary" type="popular" name="popular" style="background-color: #C13C14;">
-         <a href="{% url 'gourmate:recent_recipes' %}">Most Popular Recipes</a> <br />
+         <a href="{% url 'gourmate:popular_recipes' %}">Most Popular Recipes</a> <br />
     </button>
     <button class="btn btn-primary" type="liked" name="liked" style="background-color: #C13C14;">
-         <a href="{% url 'gourmate:recent_recipes' %}">Most Liked Recipes</a> <br />
+         <a href="{% url 'gourmate:liked_recipes' %}">Most Liked Recipes</a> <br />
     </button>
     <button class="btn btn-primary" type="recent" name="recent" style="background-color: #C13C14;">
          <a href="{% url 'gourmate:recent_recipes' %}">Most Recent Recipes</a> <br />
     </button>
-    {% for recipe in recipes %}
-        <div class="container">
-            <ul  class="list-group list-group-flush">
-                <li  class="list-group-item">
-                    <h2 class="jumbotron-heading" style="color: #C13C14;">
-                        <a href="{% url 'gourmate:recipe' recipe.title %}">
-                            {{ recipe.title.errors }}
-                            {{ recipe.title }}
-							<br />
-                            <img src="{{ MEDIA_URL }}{{ recipe.img }}" class="figure-img img-fluid" alt="PlaceHolder">
-                        </a>
-                    </h2>
-<!--
-                    <div class="form-group">
-                        <div class="col-sm-9" style="color:darksalmon;">
-                        {% for category in categories %}
-                            <a href="{% url 'gourmate:show_category' category.slug %}"></a>
-                                {{ category.name }}
-                        {% endfor %}
-                        </div>
-                    </div>-->
+	{% if recipes %}
+		{% for recipe in recipes %}
+			<div class="container">
+				<ul  class="list-group list-group-flush">
+					<li  class="list-group-item">
+						<h2 class="jumbotron-heading" style="color: #C13C14;">
+							<a href="{% url 'gourmate:recipe' recipe.title %}">
+								{{ recipe.title.errors }}
+								{{ recipe.title }}
+								<br />
+								<img src="{{ MEDIA_URL }}{{ recipe.img }}" class="figure-img img-fluid" alt="PlaceHolder">
+							</a>
+						</h2>
 
-                    <div>
-                        <label style="color: lightsalmon;">
-                            <span data-feather="user" color="lightsalmon"></span>
-                            <a href="{% url 'gourmate:profile' recipe.user.user.username %}">{{ recipe.user.user.username }}</a>
-                        </label>
-                    </div>
-
-
-					<div>
-				    <strong id="like_count">{{ recipe.likes }}</strong> likes
-					{% if user.is_authenticated %}
-					<button id="like_btn"
-					    data-recipeid="{{recipe.id}}"
-						class="btn btn-primary btn-sm"
-						type="button">
-						<span data-feather="heart" color="pink"></span>
-						Like Recipe
-					</button>
-					{% endif %}
-				    </div>
-					
-                </li>
-            </ul>
-        </div>
-        {% endfor %}
-    </ul>
-
+						<div>
+							<label style="color: lightsalmon;">
+								<span data-feather="user" color="lightsalmon"></span>
+								<a href="{% url 'gourmate:profile' recipe.user.user.username %}">{{ recipe.user.user.username }}</a>
+							</label>
+						</div>
+					<!--<div>
+						<strong id="like_count">{{ recipe.likes }}</strong> likes
+						{% if user.is_authenticated %}
+						<button id="like_btn"
+							data-recipeid="{{recipe.id}}"
+							class="btn btn-primary btn-sm"
+							type="button">
+							<span data-feather="heart" color="pink"></span>
+							Like Recipe
+						</button>
+						{% endif %}
+						</div>								
+					</li>
+				</ul>
+			</div>
+		{% endfor %}
+	{% endif %}-->
 {% endblock %}

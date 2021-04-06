@@ -14,7 +14,7 @@ from datetime import datetime
 def index(request):
     context_dict = {}
     context_dict['recipes'] = Recipe.objects.all()
-    return render(request, 'gourmate/popular_recipes.html', context=context_dict)
+    return render(request, 'gourmate/index.html', context=context_dict)
 
 
 def restricted(request):
@@ -49,17 +49,18 @@ def add_recipe(request, category_name_slug):
 
 
 def popular_recipes(request):
-    context_dict = {'popular_recipes': Recipe.order_by('-views')[:10]}
-    return render(request, 'gourmate/popular_recipes.html', context = context_dict)
+    context_dict = {}
+    context_dict['recipes'] = Recipe.objects.all()
+    return render(request, 'gourmate/popular_recipes.html', context_dict)
 
 
 def recent_recipes(request):
-    context_dict = {'recent_recipes': Recipe.order_by('-date')[:10]}
+    context_dict = {'recipes': Recipe.objects.order_by('-date')[:10]}
     return render(request, 'gourmate/recent_recipes.html', context_dict)
 
 
 def liked_recipes(request):
-    context_dict = {'liked_recipes': Recipe.order_by('-likes')[:10]}
+    context_dict = {'recipes': Recipe.objects.order_by('-likes')[:10]}
     return render(request, 'gourmate/liked_recipes.html', context_dict)
 
 def profile(request, username):
@@ -114,6 +115,19 @@ def like_recipe(request):
     recipe.save()
     return HttpResponse(recipe.likes)
 
+@login_required
+def like_comment(request):
+    comment_id = request.GET["comment_id"]
+    try:
+        comment = Comment.objects.get(id=int(comment_id))
+    except Comment.DoesNotExist:
+        return HttpResponse(-1)
+    except ValueError:
+        return HttpResponse(-1)
+
+    comment.likes = comment.likes + 1
+    comment.save()
+    return HttpResponse(comment.likes)
 
 def categories(request):
     context_dict = {}

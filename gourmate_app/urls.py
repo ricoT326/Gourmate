@@ -8,6 +8,7 @@ urlpatterns = [
     path('profile/<username>/', views.profile, name='profile'),
     path('register_profile/', views.register_profile, name='register_profile'),
     path('like_recipe/', views.like_recipe, name='like_recipe'),
+    path('like_comment/', views.like_comment, name='like_comment'),
     path('contact_us/', views.contact_us, name='contact_us'),
     path('categories/', views.categories, name='categories'),
     path('category/<slug:category_name_slug>/', views.show_category, name='show_category'),
